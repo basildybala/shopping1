@@ -6,7 +6,7 @@ let jwt=require('jsonwebtoken')
 exports.regUser=async(req,res)=>{
 
     try {
-
+        //Register User
         req.body.password=await bcrypt.hash(req.body.password,10)
         let user= await db.get().collection('user').insertOne(req.body).then().catch((err)=>{console.log(err);})
         res.send(user)
@@ -24,7 +24,7 @@ exports.loginUser=async(req,res)=>{
     try {
         
         const user = await db.get().collection('user').findOne({name:req.body.name})
-         !user && res.status(401).json("Wrong credentials!");
+         !user && res.json("Wrong User Name");
          if(user){
             bcrypt.compare(req.body.password,user.password).then((status)=>{
                 if(status){

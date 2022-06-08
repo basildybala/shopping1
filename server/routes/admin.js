@@ -1,9 +1,10 @@
 let router=require('express').Router()
-
 let adminController=require('../controller/admin')
 let path=require('path');
 let{verifyToken}=require('../controller/auth')
 const multer=require('multer');
+
+//MULTER SETUP
 const storage= multer.diskStorage({
  
     destination:function(req,file,cb){
@@ -18,17 +19,17 @@ const storage= multer.diskStorage({
   const upload=multer({storage:storage})
 
 
-router.get('/',verifyToken,(req,res)=>{
-    console.log('Admin Page');
-})
 
+//ADMIN PAGES
 router.post('/add-product',upload.array('productimg'),adminController.addProduct)
+
+
+//USER REGISTER AND LOGIN
 router.post('/register-user',adminController.regUser)
+
 router.post('/login-user',adminController.loginUser)
 
-router.get('/',(req,res)=>{
-    console.log('Admin Page');
-})
+
 
 
 
